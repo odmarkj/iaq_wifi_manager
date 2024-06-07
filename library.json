@@ -1,8 +1,8 @@
 {
-    "name": "Wifi Manager for ESP32",
+    "name": "wifi-manager",
     "version": "2.1.2",
-    "description": "An easy to use Wifi Manager for your ESP32 projects that servces a nice frontend for selecting available networks from a list or specifying your own",
-    "keywords": "esp32, wifi, manager",
+    "description": "An easy to use Wifi Manager for your ESP32 or Raspberry Pi Pico W projects that servces a nice frontend for selecting available networks from a list or specifying your own",
+    "keywords": "esp32, rp2040, pico, wifi, manager",
     "repository":
     {
       "type": "git",
@@ -17,9 +17,20 @@
       }
     ],
     "license": "MIT",
-    "dependencies": {
-      "esphome/ESPAsyncWebServer-esphome": "^3.0.0"
-    },
+    "dependencies":
+    [
+      {
+        "owner": "esphome",
+        "name": "ESPAsyncWebServer-esphome",
+        "version": "^3.0.0",
+        "platforms": ["espressif32"]
+      },
+      {
+        "name": "ESPAsyncWebServer",
+        "version": "https://github.com/doomhammer/ESPAsyncWebServer#more-rp2040-fixes",
+        "platforms": ["raspberrypi"]
+      }
+    ],
     "frameworks": ["arduino"],
-    "platforms": ["espressif32"]
+    "platforms": ["espressif32", "raspberrypi"]
   }

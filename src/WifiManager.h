@@ -2,6 +2,7 @@
 #define WIFI_MANAGER_H
 
 #include <ESPAsyncWebServer.h>
+#include <DNSServer.h>
 
 #include "Configuration.h"
 
@@ -24,6 +25,7 @@ class WifiManagerClass {
 		bool isConnected();
 
 	private:
+		DNSServer dnsServer;
 		AsyncWebServer _server;
 		Configuration _config;
 
