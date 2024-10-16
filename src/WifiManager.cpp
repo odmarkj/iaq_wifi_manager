@@ -110,12 +110,12 @@ bool WifiManagerClass::waitForConnection() {
 	unsigned long timeout = millis() + _connectionTimeout;
 
 	while (WiFi.status() != WL_CONNECTED) {
-		_t_reset();
 		if (millis() > timeout) {
 			Serial.println("Unable to connect to WIFI");
 
 			return false;
 		}
+		delay(500);
 	}
 
 	_ip = WiFi.localIP();
