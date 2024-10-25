@@ -5,7 +5,6 @@
 #include <SPIFFS.h>
 #include <WiFi.h>
 
-#include "Data.h"
 #include "Configuration.h"
 
 WifiManagerClass::WifiManagerClass()
@@ -198,36 +197,12 @@ void WifiManagerClass::startManagementServer(const char *ssid) {
 }
 
 void WifiManagerClass::serveDefaultUI() {
-    Serial.printf("Compressed html: %d bytes\n", gzipBytes);
-    Serial.printf("Uncompressed html: %d bytes\n", htmlBytes);
+	const char html[] PROGMEM = "Default HTML removed, use custom UI";
 
-	_server.on("/", HTTP_GET, [=](AsyncWebServerRequest *request) {
-        bool useGzip = acceptsCompressedResponse(request);
-
-        if (useGzip) {
-            Serial.println("Serving gzipped response");
-
-            AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", gzip, gzipBytes);
-            response->addHeader("Content-Encoding", "gzip");
-            request->send(response);
-        } else {
-            Serial.println("Serving uncompressed html");
-
-            request->send_P(200, "text/html", html);
-        }
+    _server.on("/", HTTP_GET, [=](AsyncWebServerRequest *request) {
+		Serial.println("Serving uncompressed html");
+		request->send_P(200, "text/html", html);
 	});
-}
-
-bool WifiManagerClass::acceptsCompressedResponse(AsyncWebServerRequest *request) {
-    if (request->hasHeader("Accept-Encoding")){
-        AsyncWebHeader* header = request->getHeader("Accept-Encoding");
-        String value = header->value();
-        bool hasGzip = value.indexOf("gzip") > -1;
-
-        return hasGzip;
-    }
-
-    return false;
 }
 
 String WifiManagerClass::getHostname() {
